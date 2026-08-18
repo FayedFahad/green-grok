@@ -1,5 +1,6 @@
 import { CtaBand } from "@/components/cta-band";
 import { NamedIcon } from "@/components/icons";
+import { LiveBorder } from "@/components/live-border";
 import { Reveal } from "@/components/reveal";
 import { SplitWords } from "@/components/split-words";
 import { TiltCard } from "@/components/tilt-card";
@@ -142,24 +143,24 @@ function Hero() {
 
         <div
           ref={visual}
-          className="relative"
-          style={{ transform: "translate3d(var(--hero-x, 0), var(--hero-y, 0), 0)", transition: "transform 200ms ease" }}
+          className="hero-visual"
+          style={{ transform: "translate3d(var(--hero-x, 0), var(--hero-y, 0), 0)" }}
         >
-          <div className="panel p-7">
-            <span className="mb-5 inline-flex max-w-full items-center gap-2 rounded-full border border-moss/30 bg-moss/10 px-3 py-1 text-sm font-semibold text-moss-ink">
-              <span className="pulse-dot shrink-0" />
-              <span>Accepting new projects</span>
+          <div className="why-card">
+            <LiveBorder />
+            <span className="why-badge">
+              <span className="pulse-dot" /> Currently accepting new projects
             </span>
-            <h3 className="mb-4 text-2xl">Why teams choose Greenstone</h3>
-            <ul className="flex flex-col gap-3.5 text-sm">
+            <h3>Why teams choose Greenstone</h3>
+            <ul>
               {[
                 "Direct access to the people building your software",
                 "Solutions scoped around your business goals, not templates",
                 "U.S.-based team, headquartered in Austin, Texas",
               ].map((item) => (
-                <li key={item} className="flex items-start gap-2.5">
-                  <Check className="mt-0.5 size-5 shrink-0 text-moss" strokeWidth={2.2} />
-                  <span>{item}</span>
+                <li key={item}>
+                  <Check className="size-5 shrink-0 text-moss" strokeWidth={2.2} />
+                  {item}
                 </li>
               ))}
             </ul>
@@ -167,14 +168,13 @@ function Hero() {
           {["Cloud", "Web", "Mobile", "AI"].map((label, i) => (
             <span
               key={label}
-              className="pointer-events-none absolute hidden rounded-full border border-moss/25 bg-surface/80 px-3 py-1 text-xs font-bold tracking-wide text-moss-ink shadow-soft backdrop-blur xl:inline-flex"
-              style={{
-                top: `${18 + i * 18}%`,
-                right: i % 2 === 0 ? "4%" : "auto",
-                left: i % 2 === 1 ? "4%" : "auto",
-                animation: `orb-float ${4.7 + i * 0.8}s ease-in-out infinite`,
-                animationDelay: `${-i * 0.75}s`,
-              }}
+              className="tech-chip"
+              style={
+                {
+                  "--chip-duration": `${4.7 + i * 0.8}s`,
+                  "--chip-delay": `${-i * 0.75}s`,
+                } as CSSProperties
+              }
             >
               {label}
             </span>
@@ -283,7 +283,7 @@ function Skills() {
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {SKILL_GROUPS.map((g, i) => (
             <Reveal key={g.title} delay={i * 70}>
-              <div className="panel h-full p-6">
+              <TiltCard className="h-full p-6">
                 <h4 className="mb-4 font-sans text-sm font-bold tracking-wide">{g.title}</h4>
                 <div className="flex flex-wrap gap-2">
                   {g.tags.map((tag, ti) => (
@@ -296,7 +296,7 @@ function Skills() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </TiltCard>
             </Reveal>
           ))}
         </div>

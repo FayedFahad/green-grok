@@ -1,6 +1,7 @@
+import { LiveBorder } from "@/components/live-border";
+import { SERVICES } from "@/lib/site-data";
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
-import { SERVICES } from "@/lib/site-data";
 
 export function ContactForm() {
   const [sending, setSending] = useState(false);
@@ -29,6 +30,7 @@ export function ContactForm() {
   if (sent) {
     return (
       <div className="panel p-8">
+        <LiveBorder />
         <p className="eyebrow">Received</p>
         <h3 className="mt-3 text-2xl">Thank you — we'll be in touch.</h3>
         <p className="mt-3 text-muted">
@@ -47,6 +49,7 @@ export function ContactForm() {
 
   return (
     <form className="panel grid gap-5 p-6 sm:p-8" onSubmit={onSubmit} noValidate>
+      <LiveBorder />
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="field">
           <label htmlFor="name">Name</label>

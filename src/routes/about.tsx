@@ -121,7 +121,7 @@ function About() {
             </h2>
           </div>
           <Reveal>
-            <div className="panel mx-auto flex max-w-3xl flex-wrap items-center gap-7 p-8">
+            <TiltCard className="mx-auto flex max-w-3xl flex-wrap items-center gap-7 p-8">
               <img
                 src={founder.photo}
                 alt={founder.name}
@@ -138,7 +138,7 @@ function About() {
                   View Full Profile
                 </Link>
               </div>
-            </div>
+            </TiltCard>
           </Reveal>
         </div>
       </section>

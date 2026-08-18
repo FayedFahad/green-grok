@@ -1,7 +1,8 @@
-import { PageHero } from "@/components/page-hero";
+import { LiveBorder } from "@/components/live-border";
 import { Reveal } from "@/components/reveal";
+import { TiltCard } from "@/components/tilt-card";
 import { getEmployee } from "@/lib/site-data";
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Check, Linkedin, Mail, ShieldCheck } from "lucide-react";
 import type { CSSProperties } from "react";
 
@@ -32,44 +33,46 @@ function Profile() {
 
   return (
     <main id="main">
-      <PageHero
-        eyebrow="Employee Profile"
-        title={person.name}
-        lede={person.role}
-        crumbs={[
-          { label: "Home", to: "/" },
-          { label: "Employees", to: "/employees" },
-          { label: person.name },
-        ]}
-      />
+      <section className="hero hero-simple page-header !pb-0">
+        <div className="wrap">
+          <nav className="mb-0 flex flex-wrap items-center gap-2 text-sm text-muted" aria-label="Breadcrumb">
+            <Link to="/" className="hover:text-moss">Home</Link>
+            <span aria-hidden="true">/</span>
+            <Link to="/employees" className="hover:text-moss">Employees</Link>
+            <span aria-hidden="true">/</span>
+            <span className="text-fg">{person.name}</span>
+          </nav>
+        </div>
+      </section>
 
       <section className="section-tight">
-        <div className="wrap grid items-start gap-8 lg:grid-cols-[320px_1fr]">
+        <div className="profile-layout wrap">
           <Reveal>
             <aside className="id-card">
+              <LiveBorder />
               <div className="id-punch" />
-              <div className="mx-auto mb-4 size-36 overflow-hidden rounded-2xl ring-2 ring-moss/50">
-                <img src={person.photo} alt={person.name} className="size-full object-cover" />
+              <div className="id-photo">
+                <img src={person.photo} alt={person.name} />
               </div>
-              <div className="relative text-center">
-                <h2 className="text-2xl text-white">{person.name}</h2>
-                <div className="mt-1 font-semibold text-lime">{person.role}</div>
+              <div className="id-name">
+                <h1>{person.name}</h1>
+                <div className="id-role">{person.role}</div>
               </div>
-              <div className="relative my-4 flex justify-center">
-                <span className="inline-flex items-center gap-2 rounded-full border border-moss/40 bg-moss/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-lime">
+              <div className="id-status">
+                <span className="badge-status">
                   <span className="pulse-dot" /> Active Employee
                 </span>
               </div>
-              <dl className="relative grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
-                <dt className="text-mist/60">Employee ID</dt>
-                <dd className="m-0 font-semibold">{person.id}</dd>
-                <dt className="text-mist/60">Department</dt>
-                <dd className="m-0">{person.department}</dd>
-                <dt className="text-mist/60">Start Date</dt>
-                <dd className="m-0">{person.start}</dd>
+              <dl>
+                <dt>Employee ID</dt>
+                <dd>{person.id}</dd>
+                <dt>Department</dt>
+                <dd>{person.department}</dd>
+                <dt>Start Date</dt>
+                <dd>{person.start}</dd>
               </dl>
-              <div className="relative mt-5 flex items-start gap-2 rounded-xl bg-white/5 p-3 text-xs leading-relaxed text-mist/80">
-                <ShieldCheck className="mt-0.5 size-4 shrink-0 text-moss" />
+              <div className="id-verify">
+                <ShieldCheck />
                 <span>
                   This page is the official record used to verify current Greenstone Solutions
                   employment when a company ID badge QR code is scanned.
@@ -79,9 +82,9 @@ function Profile() {
           </Reveal>
 
           <Reveal delay={80}>
-            <div>
+            <div className="profile-detail">
               <span className="eyebrow">Employee Profile</span>
-              <h2 className="mt-3 text-3xl">About {person.first}</h2>
+              <h2 className="mt-3">About {person.first}</h2>
               <p className="mt-4 text-muted">{person.bio}</p>
               {person.bullets ? (
                 <ul className="mt-5 flex flex-col gap-3">
@@ -112,7 +115,7 @@ function Profile() {
               </div>
 
               {person.placeholder ? (
-                <p className="mt-6 rounded-2xl border border-dashed border-border bg-surface p-4 text-sm text-muted">
+                <p className="placeholder-note">
                   This profile is a placeholder. Send {person.first}'s real photo, start date, and a
                   short bio to replace the initials avatar and complete this page.
                 </p>
@@ -123,7 +126,7 @@ function Profile() {
                   <h3 className="mb-5 text-xl">Skills</h3>
                   <div className="grid gap-4 sm:grid-cols-2">
                     {person.skills.map((g) => (
-                      <div key={g.title} className="panel p-5">
+                      <TiltCard key={g.title} className="p-5">
                         <h4 className="mb-3 font-sans text-sm font-bold">{g.title}</h4>
                         <div className="flex flex-wrap gap-2">
                           {g.tags.map((tag, i) => (
@@ -136,7 +139,7 @@ function Profile() {
                             </span>
                           ))}
                         </div>
-                      </div>
+                      </TiltCard>
                     ))}
                   </div>
                 </div>
@@ -147,7 +150,7 @@ function Profile() {
                   <h3 className="mb-5 text-xl">Certifications</h3>
                   <div className="grid gap-4">
                     {person.certs.map((g) => (
-                      <div key={g.title} className="panel p-5">
+                      <TiltCard key={g.title} className="p-5">
                         <h4 className="mb-3 font-sans text-sm font-bold">{g.title}</h4>
                         <ul className="space-y-2">
                           {g.items.map((item) => (
@@ -157,7 +160,7 @@ function Profile() {
                             </li>
                           ))}
                         </ul>
-                      </div>
+                      </TiltCard>
                     ))}
                   </div>
                 </div>

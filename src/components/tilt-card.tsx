@@ -1,5 +1,6 @@
-import { useRef, type CSSProperties, type PointerEvent, type ReactNode } from "react";
+import { LiveBorder } from "@/components/live-border";
 import { cn } from "@/lib/utils";
+import { useRef, type CSSProperties, type PointerEvent, type ReactNode } from "react";
 
 export function TiltCard({
   children,
@@ -43,6 +44,7 @@ export function TiltCard({
       onPointerLeave={onLeave}
       style={{ "--rx": "0deg", "--ry": "0deg" } as CSSProperties}
     >
+      <LiveBorder />
       {children}
     </Tag>
   );

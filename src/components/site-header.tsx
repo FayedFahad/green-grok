@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
-import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, Moon, Sun, X } from "lucide-react";
-import { SignedIn, SignedOut, UserButton } from "@/lib/auth/gates";
-import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { NAV } from "@/lib/site-data";
 import { useTheme } from "@/lib/theme";
 import { cn } from "@/lib/utils";
+import { Link, useRouterState } from "@tanstack/react-router";
+import { Menu, Moon, Sun, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function SiteHeader() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { theme, toggle } = useTheme();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { isPending } = useCurrentUserState();
 
   useEffect(() => {
     setOpen(false);
@@ -66,22 +63,6 @@ export function SiteHeader() {
           <Link to="/contact" className="btn btn-primary nav-cta">
             Get in Touch
           </Link>
-          {isPending ? (
-            <span className="hidden h-8 w-8 animate-pulse rounded-full bg-moss/15 sm:block" />
-          ) : (
-            <>
-              <SignedIn>
-                <div className="hidden sm:block">
-                  <UserButton />
-                </div>
-              </SignedIn>
-              <SignedOut>
-                <Link to="/login" className="nav-link hidden sm:inline-flex">
-                  Sign in
-                </Link>
-              </SignedOut>
-            </>
-          )}
           <button
             type="button"
             className="icon-btn"
